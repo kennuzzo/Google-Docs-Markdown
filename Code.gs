@@ -15,7 +15,6 @@ function onInstall(e) {
 // Render document text as markdown and show in a modal dialog.
 function showMarkdown() {
   var markdown, html, output;
-  
   try {
     markdown = getDocumentText();
     html = getConverter().makeHtml(markdown);
@@ -25,7 +24,7 @@ function showMarkdown() {
       .setHeight(500);
     DocumentApp.getUi().showModalDialog(output, 'Rendered Markdown');
   } catch(e) {
-    DocumentApp.getUi().alert('There was an error rendering this document as markdown.');
+    DocumentApp.getUi().alert('There was an error rendering this document as markdown.' + e );
   }
 }
 
@@ -37,7 +36,7 @@ function getDocumentText() {
 // Get markdown converter.
 function getConverter() {
   if (!showdownConverter) {
-    showdownConverter = new Showdown.converter();
+    showdownConverter = new showdown.Converter({tables: true});    
   }
   return showdownConverter;
 }
